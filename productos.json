@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "title": "Flip6",
+    "description": "Descripcion Flip6",
+    "code": "jblflip6",
+    "price": 99,
+    "status": "True",
+    "stock": 1000000000,
+    "category": "Parlante",
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 2,
+    "title": "Go3",
+    "description": "Descripcion Go3",
+    "code": "jblgo3",
+    "price": 35,
+    "status": "True",
+    "stock": 100,
+    "category": "Parlante",
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 3,
+    "title": "Charge5",
+    "description": "Descripcion Charge5",
+    "code": "jblcharge5",
+    "price": 145,
+    "status": "True",
+    "stock": 100,
+    "category": "Parlante",
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 4,
+    "title": "Xtreme3",
+    "description": "Descripcion Xtreme3",
+    "code": "jblxtreme3",
+    "status": "True",
+    "stock": 100,
+    "category": "Parlante",
+    "price": 249,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 5,
+    "title": "Boombox3",
+    "description": "Descripcion Boombox3",
+    "code": "jblboombox3",
+    "status": "True",
+    "stock": 100,
+    "category": "Parlante",
+    "price": 349,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 6,
+    "title": "WaveBuds",
+    "description": "Descripcion WaveBuds",
+    "code": "jblwbuds",
+    "status": "True",
+    "stock": 100,
+    "category": "Auricular",
+    "price": 45,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 7,
+    "title": "WaveFlex",
+    "description": "Descripcion WaveFkex",
+    "code": "jblwflex",
+    "status": "True",
+    "stock": 100,
+    "category": "Auricular",
+    "price": 59,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 8,
+    "title": "TuneFlex",
+    "description": "Descripcion TuneFlex",
+    "code": "jbltflex",
+    "status": "True",
+    "stock": 100,
+    "category": "Auricular",
+    "price": 69,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 9,
+    "title": "PartyBox310",
+    "description": "Descripcion PartyBox310",
+    "code": "jblpbox310",
+    "status": "True",
+    "stock": 100,
+    "category": "PartyBox",
+    "price": 479,
+    "thumbail": "Sin imagen"
+  },
+  {
+    "id": 10,
+    "title": "PartyBox710",
+    "description": "Descripcion PartyBox710",
+    "code": "jlbpbox710",
+    "status": "True",
+    "stock": 100,
+    "category": "PartyBox",
+    "price": 679,
+    "thumbail": "Sin imagen"
+  }
+]

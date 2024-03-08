@@ -1,0 +1,126 @@
+const express = require('express');
+const fs = require('fs');
+
+const router = express.Router();
+
+//Obtengo lista de carritos desde json
+async function getCartList() {
+    try {
+        const data = await fs.promises.readFile('carrito.json', 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        
+        return [];
+    }
+}
+
+//Guardo lista de carritos en json
+async function saveCartList(cartList) {
+    await fs.promises.writeFile('carrito.json', JSON.stringify(cartList, null, 2));
+}
+
+//Crear nuevo carrito
+router.post('/', async (req, res) => {
+    try {
+        const newCartId = Date.now().toString();
+        
+        const newCart = {
+            id: newCartId,
+            products: []
+        };
+        
+        const cartList = await getCartList();
+       
+        cartList.push(newCart);
+        
+        await saveCartList(cartList);
+        res.status(200).json({ message: 'Nuevo carrito creado', cartId: newCartId });
+    } catch (error) {
+        console.error('Error al crear un nuevo carrito:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+//Listar productos de carrito
+router.get('/:cid', async (req, res) => {
+    try {
+        const { cid } = req.params;
+    
+        const cartList = await getCartList();
+      
+        const cart = cartList.find(cart => cart.id === cid);
+        if (!cart) {
+            return res.status(404).json({ error: 'Carrito no encontrado' });
+        }
+        res.status(200).json(cart.products);
+    } catch (error) {
+        console.error('Error al obtener productos del carrito:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+//Agregar producto a carrito
+router.post('/:cid/product/:pid', async (req, res) => {
+    try {
+        const { cid, pid } = req.params;
+        const { quantity } = req.body;
+        if (!quantity || isNaN(quantity) || quantity <= 0) {
+            return res.status(400).json({ error: 'La cantidad del producto debe ser un número entero positivo' });
+        }
+     
+        let cartList = await getCartList();
+       
+        const cartIndex = cartList.findIndex(cart => cart.id === cid);
+        if (cartIndex === -1) {
+            return res.status(404).json({ error: 'Carrito no encontrado' });
+        }
+        const cart = cartList[cartIndex];
+     
+        const productIndex = cart.products.findIndex(product => product.id === pid);
+        if (productIndex !== -1) {
+           
+            cart.products[productIndex].quantity += parseInt(quantity);
+        } else {
+            
+            cart.products.push({ id: pid, quantity: parseInt(quantity) });
+        }
+        
+        cartList[cartIndex] = cart;
+        await saveCartList(cartList);
+        res.status(200).json({ message: `Producto ${pid} agregado al carrito ${cid}` });
+    } catch (error) {
+        console.error('Error al agregar producto al carrito:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+//Eliminar producto de carrito
+router.delete('/:cid/product/:pid', async (req, res) => {
+    try {
+        const { cid, pid } = req.params;
+        
+        let cartList = await getCartList();
+        
+        const cartIndex = cartList.findIndex(cart => cart.id === cid);
+        if (cartIndex === -1) {
+            return res.status(404).json({ error: 'Carrito no encontrado' });
+        }
+        const cart = cartList[cartIndex];
+     
+        const productIndex = cart.products.findIndex(product => product.id === pid);
+        if (productIndex === -1) {
+            return res.status(404).json({ error: 'Producto no encontrado en el carrito' });
+        }
+       
+        cart.products.splice(productIndex, 1);
+        
+        cartList[cartIndex] = cart;
+        await saveCartList(cartList);
+        res.status(200).json({ message: `Producto ${pid} eliminado del carrito ${cid}` });
+    } catch (error) {
+        console.error('Error al eliminar producto del carrito:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+module.exports = router;
